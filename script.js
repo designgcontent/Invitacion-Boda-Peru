@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Main Wedding Date for Countdown (Lima Event)
-    // Sábado 18 de Octubre del 2025. Using 17:00 (5 PM) as placeholder start time.
-    const weddingDate = new Date('Oct 18, 2025 17:00:00 GMT-0500').getTime(); // Lima time (GMT-5)
+    // Actualizado: Ceremonia a las 2:00 PM GMT-0500 (hora de Lima)
+    // Sábado 18 de Octubre del 2025, 2:00 PM (14:00)
+    const weddingDate = new Date('Oct 18, 2025 14:00:00 GMT-0500').getTime(); // Lima time (GMT-5)
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
     const minutesEl = document.getElementById('minutes');
@@ -109,25 +109,25 @@ document.addEventListener('DOMContentLoaded', function() {
             speed: 500,
             slidesToShow: 3,
             slidesToScroll: 1,
-            centerMode: true, 
-            centerPadding: '40px', 
+            centerMode: true,
+            centerPadding: '40px',
             autoplay: true,
             autoplaySpeed: 3000,
             responsive: [
                 {
-                    breakpoint: 992, 
+                    breakpoint: 992,
                     settings: {
                         slidesToShow: 2,
-                        centerMode: true, 
-                        centerPadding: '30px' 
+                        centerMode: true,
+                        centerPadding: '30px'
                     }
                 },
                 {
-                    breakpoint: 576, 
+                    breakpoint: 576,
                     settings: {
                         slidesToShow: 1,
-                        centerMode: true, 
-                        centerPadding: '30px' 
+                        centerMode: true,
+                        centerPadding: '30px'
                     }
                 }
             ]
@@ -272,8 +272,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const asistenciaValue = hiddenAttendanceInput.value;
             const asistenciaTexto = asistenciaValue === 'si' ? 'Sí, confirmo asistencia' : 'No podré asistir';
             const comentario = comentarioInput ? comentarioInput.value.trim() : '';
-            const evento = eventoInput ? eventoInput.value : 'Evento Boda Lima'; 
-            const weddingEmail = 'matrimoniokathayjplima@gmail.com';
+            const evento = eventoInput ? eventoInput.value : 'Evento Boda Lima';
+            const weddingEmail = 'matrimoniokathayjplima@gmail.com'; // Email para esta boda
             const subject = `Confirmación Asistencia Boda K&J - ${evento}`;
             let body = `Hola Katharine y Juan,\n\nUna nueva confirmación ha llegado:\n-------------------------------------\n`;
             body += `Nombre: ${nombre}\nEvento: ${evento}\nAsistencia: ${asistenciaTexto}\n`;
@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const weddingEmail = 'matrimoniokathayjplima@gmail.com';
+            const weddingEmail = 'matrimoniokathayjplima@gmail.com'; // Email para esta boda
             const subject = `Sugerencia Musical Boda K&J (Lima) - ${nombre}`;
             let body = `Hola Katharine y Juan,\n\n${nombre} ha sugerido una canción para la boda en Lima:\n-------------------------------------\n`;
             body += `Canción y Autor: ${cancionAutor}\n`;
@@ -387,40 +387,40 @@ document.addEventListener('DOMContentLoaded', function() {
         const baseUrl = 'https://www.google.com/calendar/render?action=TEMPLATE';
         const params = new URLSearchParams();
         params.append('text', details.text);
-        params.append('dates', details.dates); 
+        params.append('dates', details.dates);
         params.append('details', details.details);
         params.append('location', details.location);
         if (details.ctz) {
-            params.append('ctz', details.ctz); 
+            params.append('ctz', details.ctz);
         }
         return `${baseUrl}&${params.toString()}`;
     }
 
-    const limaMainEventLocation = "El Tomate De Cieneguilla (Ver mapa: https://maps.app.goo.gl/h6zKTuAg22vDjumg7)";
+    const limaMainEventLocation = "El Tomate De Cieneguilla"; // Dirección más específica podría ir aquí
     const limaMainEventDate = "20251018"; // Sábado 18 de Octubre del 2025
     const limaTimeZone = "America/Lima";
 
-    // Placeholder times: Ceremony 5-6 PM (17:00-18:00), Party 6 PM onwards (18:00-23:59)
+    // Actualizado: Horarios para Google Calendar
     const limaCeremonyEventDetails = {
         text: "Ceremonia Boda K&J - Lima",
-        dates: `${limaMainEventDate}T170000/${limaMainEventDate}T180000`,
+        dates: `${limaMainEventDate}T140000/${limaMainEventDate}T150000`, // 2:00 PM a 3:00 PM
         ctz: limaTimeZone,
         details: "Ceremonia de Nuestra Boda - Katharine y Juan en Lima\nLugar: El Tomate De Cieneguilla\n¡Te esperamos!",
-        location: limaMainEventLocation
+        location: limaMainEventLocation // Se mantiene la dirección general
     };
 
     const limaPartyEventDetails = {
         text: "Fiesta Boda K&J - Lima",
-        dates: `${limaMainEventDate}T180000/${limaMainEventDate}T235900`, 
+        dates: `${limaMainEventDate}T150000/${limaMainEventDate}T235900`, // 3:00 PM hasta la noche
         ctz: limaTimeZone,
         details: "Fiesta de Nuestra Boda - Katharine y Juan en Lima\nLugar: El Tomate De Cieneguilla\n¡A celebrar!",
-        location: limaMainEventLocation
+        location: limaMainEventLocation // Se mantiene la dirección general
     };
 
     const agendarCeremoniaBtn = document.getElementById('agendar-ceremonia-btn');
-    const agendarFiestaBtn = document.getElementById('agendar-fiesta-btn');
+    const agendarFiestaBtn = document.getElementById('agendar-fiesta-btn'); // Corregido de agendar-recepcion-btn
     const agendarCeremoniaFooterLink = document.getElementById('agendar-ceremonia-footer-link');
-    const agendarFiestaFooterLink = document.getElementById('agendar-fiesta-footer-link');
+    const agendarFiestaFooterLink = document.getElementById('agendar-fiesta-footer-link'); // Corregido de agendar-recepcion-footer-link
 
     if (agendarCeremoniaBtn) {
         agendarCeremoniaBtn.addEventListener('click', (e) => {
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.open(generateGoogleCalendarLink(limaCeremonyEventDetails), '_blank');
         });
     }
-    if (agendarFiestaBtn) { 
+    if (agendarFiestaBtn) {
         agendarFiestaBtn.addEventListener('click', (e) => {
             e.preventDefault();
             window.open(generateGoogleCalendarLink(limaPartyEventDetails), '_blank');
@@ -440,7 +440,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.open(generateGoogleCalendarLink(limaCeremonyEventDetails), '_blank');
         });
     }
-    if (agendarFiestaFooterLink) { 
+    if (agendarFiestaFooterLink) {
         agendarFiestaFooterLink.addEventListener('click', (e) => {
             e.preventDefault();
             window.open(generateGoogleCalendarLink(limaPartyEventDetails), '_blank');
@@ -457,8 +457,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    const confirmarFiestaFooter = document.getElementById('confirmar-fiesta-footer-link');
-    const openConfirmarFiestaBtn = document.getElementById('open-confirmar-fiesta-modal');
+    const confirmarFiestaFooter = document.getElementById('confirmar-fiesta-footer-link'); // Corregido de confirmar-recepcion-footer-link
+    const openConfirmarFiestaBtn = document.getElementById('open-confirmar-fiesta-modal'); // Corregido de open-confirmar-recepcion-modal
     if (confirmarFiestaFooter && openConfirmarFiestaBtn) {
         confirmarFiestaFooter.addEventListener('click', (e) => {
             e.preventDefault();
