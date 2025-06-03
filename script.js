@@ -228,6 +228,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const nombreInput = form.querySelector('input[name="nombre_asistencia"]');
         const comentarioInput = form.querySelector('input[name="comentario_asistencia"]');
         const eventoInput = form.querySelector('input[name="evento"]');
+        const submitButtons = form.querySelectorAll('button[type="submit"]');
+
 
         attendanceButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -246,56 +248,83 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (formMessage) {
-                formMessage.style.display = 'none'; formMessage.textContent = ''; formMessage.style.color = 'red';
-            }
+        submitButtons.forEach(submitButton => {
+            submitButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                const submitType = this.value;
 
-            if (!hiddenAttendanceInput || !hiddenAttendanceInput.value) {
-                 if (formMessage) {
-                    formMessage.textContent = 'Por favor, selecciona si asistirás o no.';
-                    formMessage.style.display = 'block';
-                }
-                return;
-            }
-            if (!nombreInput || !nombreInput.value.trim()) {
                 if (formMessage) {
-                    formMessage.textContent = 'Por favor, ingresa tu nombre completo.';
-                    formMessage.style.display = 'block';
+                    formMessage.style.display = 'none'; formMessage.textContent = ''; formMessage.style.color = 'red';
                 }
-                if(nombreInput) nombreInput.focus();
-                return;
-            }
 
-            const nombre = nombreInput.value.trim();
-            const asistenciaValue = hiddenAttendanceInput.value;
-            const asistenciaTexto = asistenciaValue === 'si' ? 'Sí, confirmo asistencia' : 'No podré asistir';
-            const comentario = comentarioInput ? comentarioInput.value.trim() : '';
-            const evento = eventoInput ? eventoInput.value : 'Evento Boda Lima';
-            const weddingEmail = 'matrimoniokathayjplima@gmail.com'; // Email para esta boda
-            const subject = `Confirmación Asistencia Boda K&J - ${evento}`;
-            let body = `Hola Katharine y Juan,\n\nUna nueva confirmación ha llegado:\n-------------------------------------\n`;
-            body += `Nombre: ${nombre}\nEvento: ${evento}\nAsistencia: ${asistenciaTexto}\n`;
-            if (comentario) body += `Comentario: ${comentario}\n`;
-            body += `-------------------------------------\n\nSaludos,\n${nombre}`;
-            const mailtoLink = `mailto:${weddingEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                if (!hiddenAttendanceInput || !hiddenAttendanceInput.value) {
+                     if (formMessage) {
+                        formMessage.textContent = 'Por favor, selecciona si asistirás o no.';
+                        formMessage.style.display = 'block';
+                    }
+                    return;
+                }
+                if (!nombreInput || !nombreInput.value.trim()) {
+                    if (formMessage) {
+                        formMessage.textContent = 'Por favor, ingresa tu nombre completo.';
+                        formMessage.style.display = 'block';
+                    }
+                    if(nombreInput) nombreInput.focus();
+                    return;
+                }
 
-            if (formMessage) {
-                formMessage.textContent = 'Gracias. Serás redirigido a tu cliente de correo para enviar la confirmación.';
-                formMessage.style.color = 'green'; formMessage.style.display = 'block';
-            }
+                const nombre = nombreInput.value.trim();
+                const asistenciaValue = hiddenAttendanceInput.value;
+                const asistenciaTexto = asistenciaValue === 'si' ? 'Sí, confirmo asistencia' : 'No podré asistir';
+                const comentario = comentarioInput ? comentarioInput.value.trim() : '';
+                const evento = eventoInput ? eventoInput.value : 'Evento Boda Lima';
+                const weddingEmail = 'matrimoniokathayjplima@gmail.com';
+                const whatsappNumber = '51993968980';
 
-            setTimeout(() => { window.location.href = mailtoLink; }, 500);
-            setTimeout(() => {
-                if (modalControls && modalControls.closeModal) modalControls.closeModal();
-                form.reset();
-                attendanceButtons.forEach(btn => btn.classList.remove('selected'));
-                if (hiddenAttendanceInput) hiddenAttendanceInput.value = '';
-                if (formMessage) formMessage.style.display = 'none';
-            }, 4000);
+                if (submitType === 'correo') {
+                    const subject = `Confirmación Asistencia Boda K&JP - ${evento}`;
+                    let body = `Hola Katha y Juan Pablo,\n\nUna nueva confirmación ha llegado:\n-------------------------------------\n`;
+                    body += `Nombre: ${nombre}\nEvento: ${evento}\nAsistencia: ${asistenciaTexto}\n`;
+                    if (comentario) body += `Datos adicionales, alergias: ${comentario}\n`;
+                    body += `-------------------------------------\n\nSaludos,\n${nombre}`;
+                    const mailtoLink = `mailto:${weddingEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+                    if (formMessage) {
+                        formMessage.textContent = 'Gracias. Serás redirigido a tu cliente de correo para enviar la confirmación.';
+                        formMessage.style.color = 'green'; formMessage.style.display = 'block';
+                    }
+                    setTimeout(() => { window.location.href = mailtoLink; }, 500);
+
+                } else if (submitType === 'whatsapp') {
+                    let whatsappText = `¡Hola Katha y Juan Pablo! 👋\n\nQuiero confirmar mi asistencia para su boda:\n-------------------------------------\n`;
+                    whatsappText += `*Evento:* ${evento}\n`;
+                    whatsappText += `*Nombre:* ${nombre}\n`;
+                    whatsappText += `*Asistencia:* ${asistenciaTexto}\n`;
+                    if (comentario) {
+                        whatsappText += `*Datos adicionales, alergias:* ${comentario}\n`;
+                    }
+                    whatsappText += `-------------------------------------\n¡Nos vemos! 🎉`;
+
+                    const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappText)}`;
+
+                    if (formMessage) {
+                        formMessage.textContent = 'Gracias. Serás redirigido a WhatsApp para enviar la confirmación.';
+                        formMessage.style.color = 'green'; formMessage.style.display = 'block';
+                    }
+                    setTimeout(() => { window.open(whatsappLink, '_blank'); }, 500);
+                }
+
+                setTimeout(() => {
+                    if (modalControls && modalControls.closeModal) modalControls.closeModal();
+                    form.reset();
+                    attendanceButtons.forEach(btn => btn.classList.remove('selected'));
+                    if (hiddenAttendanceInput) hiddenAttendanceInput.value = '';
+                    if (formMessage) formMessage.style.display = 'none';
+                }, 4000);
+            });
         });
     };
+
 
     if (document.getElementById('form-confirmar-ceremonia')) {
         handleConfirmationForm('form-confirmar-ceremonia', ceremoniaConfirmModalControls);
@@ -346,9 +375,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const weddingEmail = 'matrimoniokathayjplima@gmail.com'; // Email para esta boda
-            const subject = `Sugerencia Musical Boda K&J (Lima) - ${nombre}`;
-            let body = `Hola Katharine y Juan,\n\n${nombre} ha sugerido una canción para la boda en Lima:\n-------------------------------------\n`;
+            const weddingEmail = 'matrimoniokathayjplima@gmail.com';
+            const subject = `Sugerencia Musical Boda K&JP (Lima) - ${nombre}`;
+            let body = `Hola Katha y Juan Pablo,\n\n${nombre} ha sugerido una canción para la boda en Lima:\n-------------------------------------\n`;
             body += `Canción y Autor: ${cancionAutor}\n`;
             if (linkCancion) {
                 body += `Link (opcional): ${linkCancion}\n`;
@@ -396,31 +425,30 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${baseUrl}&${params.toString()}`;
     }
 
-    const limaMainEventLocation = "El Tomate De Cieneguilla"; // Dirección más específica podría ir aquí
-    const limaMainEventDate = "20251018"; // Sábado 18 de Octubre del 2025
+    const limaMainEventLocation = "El Tomate De Cieneguilla";
+    const limaMainEventDate = "20251018";
     const limaTimeZone = "America/Lima";
 
-    // Actualizado: Horarios para Google Calendar
     const limaCeremonyEventDetails = {
-        text: "Ceremonia Boda K&J - Lima",
+        text: "Ceremonia Boda K&JP - Lima",
         dates: `${limaMainEventDate}T140000/${limaMainEventDate}T150000`, // 2:00 PM a 3:00 PM
         ctz: limaTimeZone,
-        details: "Ceremonia de Nuestra Boda - Katharine y Juan en Lima\nLugar: El Tomate De Cieneguilla\n¡Te esperamos!",
-        location: limaMainEventLocation // Se mantiene la dirección general
+        details: "Ceremonia de Nuestra Boda - Katha y Juan Pablo en Lima\nLugar: El Tomate De Cieneguilla\n¡Te esperamos!",
+        location: limaMainEventLocation
     };
 
     const limaPartyEventDetails = {
-        text: "Fiesta Boda K&J - Lima",
+        text: "Fiesta Boda K&JP - Lima",
         dates: `${limaMainEventDate}T150000/${limaMainEventDate}T235900`, // 3:00 PM hasta la noche
         ctz: limaTimeZone,
-        details: "Fiesta de Nuestra Boda - Katharine y Juan en Lima\nLugar: El Tomate De Cieneguilla\n¡A celebrar!",
-        location: limaMainEventLocation // Se mantiene la dirección general
+        details: "Fiesta de Nuestra Boda - Katha y Juan Pablo en Lima\nLugar: El Tomate De Cieneguilla\n¡A celebrar!",
+        location: limaMainEventLocation
     };
 
     const agendarCeremoniaBtn = document.getElementById('agendar-ceremonia-btn');
-    const agendarFiestaBtn = document.getElementById('agendar-fiesta-btn'); // Corregido de agendar-recepcion-btn
+    const agendarFiestaBtn = document.getElementById('agendar-fiesta-btn');
     const agendarCeremoniaFooterLink = document.getElementById('agendar-ceremonia-footer-link');
-    const agendarFiestaFooterLink = document.getElementById('agendar-fiesta-footer-link'); // Corregido de agendar-recepcion-footer-link
+    const agendarFiestaFooterLink = document.getElementById('agendar-fiesta-footer-link');
 
     if (agendarCeremoniaBtn) {
         agendarCeremoniaBtn.addEventListener('click', (e) => {
@@ -457,8 +485,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    const confirmarFiestaFooter = document.getElementById('confirmar-fiesta-footer-link'); // Corregido de confirmar-recepcion-footer-link
-    const openConfirmarFiestaBtn = document.getElementById('open-confirmar-fiesta-modal'); // Corregido de open-confirmar-recepcion-modal
+    const confirmarFiestaFooter = document.getElementById('confirmar-fiesta-footer-link');
+    const openConfirmarFiestaBtn = document.getElementById('open-confirmar-fiesta-modal');
     if (confirmarFiestaFooter && openConfirmarFiestaBtn) {
         confirmarFiestaFooter.addEventListener('click', (e) => {
             e.preventDefault();
