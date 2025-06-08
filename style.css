@@ -1046,7 +1046,8 @@ section.instagram .boton { margin-top: 0; }
     stroke-width: 1px;
 }
 
-.modal-content .box-color-col .anim-confirmar-asistencia {
+.modal-content .box-color-col .anim-confirmar-asistencia,
+.modal-content .box-color-col .anim-pre-confirmar {
     width: 100px;
     height: 100px;
     margin: 0 auto 1rem auto;
@@ -1104,6 +1105,15 @@ section.instagram .boton { margin-top: 0; }
 }
 .modal-content .box-color-col p a:hover {
     color: var(--color-pallete-1);
+}
+
+/* --- NUEVO ESTILO PARA EL MODAL INTERMEDIO --- */
+.pre-confirm-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 1.5rem;
 }
 
 .modal-form .attendance-options {

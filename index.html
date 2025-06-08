@@ -302,6 +302,7 @@
          </footer>
 
 </div>
+
 <div id="modal-musica" class="modal-overlay">
     <div class="modal-content box-bordes-adorno">
         <button class="modal-close" aria-label="Cerrar modal">×</button>
@@ -313,7 +314,7 @@
              <div class="icon-container modal-icon-container"><div class="anim-musica-modal"></div></div>
             <h3>Sugerir Canción</h3>
             <svg class="adorno-titulo-modal" viewBox="0 0 100 10"><path d="M0 5 H100" stroke="var(--color-adorno-titulo-modal)" stroke-width="1"></path><circle cx="50" cy="5" r="3" fill="var(--color-adorno-titulo-modal)"></circle></svg>
-            <form id="form-sugerir-musica" action="#" method="POST" class="modal-form">
+            <form id="form-sugerir-musica" class="modal-form">
                 <div class="form-group"> <input type="text" id="nombre_sugerencia" name="nombre_sugerencia" placeholder="Tu nombre" required> </div>
                 <div class="form-group"> <input type="text" id="cancion_autor" name="cancion_autor" placeholder="Nombre de canción y autor" required> </div>
                 <div class="form-group"> <input type="text" id="link_cancion" name="link_cancion" placeholder="Si lo desea ingrese el link de youtube, spotify, etc."> </div>
@@ -386,6 +387,28 @@
     </div>
 </div>
 
+<div id="modal-pre-confirmar" class="modal-overlay">
+    <div class="modal-content box-bordes-adorno">
+        <button class="modal-close" aria-label="Cerrar modal">×</button>
+        <svg class="adorno-esquina adorno-esquina-0" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <svg class="adorno-esquina adorno-esquina-1" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <svg class="adorno-esquina adorno-esquina-2" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <svg class="adorno-esquina adorno-esquina-3" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <div class="box-color-col">
+            <div class="icon-container modal-icon-container">
+                <div class="anim-pre-confirmar"></div>
+            </div>
+            <h3>Confirmar Asistencia</h3>
+            <svg class="adorno-titulo-modal" viewBox="0 0 100 10"><path d="M0 5 H100" stroke="var(--color-adorno-titulo-modal)" stroke-width="1"></path><circle cx="50" cy="5" r="3" fill="var(--color-adorno-titulo-modal)"></circle></svg>
+            <p>Por favor, selecciona una opción.</p>
+            <div class="form-group pre-confirm-options">
+                <button type="button" class="boton" id="pre-confirmar-solo-btn">Voy solo/a</button>
+                <button type="button" class="boton" id="pre-confirmar-acompanante-btn">Voy con acompañante</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="modal-confirmar-ceremonia" class="modal-overlay">
     <div class="modal-content box-bordes-adorno">
         <button class="modal-close" aria-label="Cerrar modal">×</button>
@@ -399,7 +422,7 @@
             </div>
             <h3>¿Asistes a la Ceremonia?</h3>
             <svg class="adorno-titulo-modal" viewBox="0 0 100 10"><path d="M0 5 H100" stroke="var(--color-adorno-titulo-modal)" stroke-width="1"></path><circle cx="50" cy="5" r="3" fill="var(--color-adorno-titulo-modal)"></circle></svg>
-            <form id="form-confirmar-ceremonia" class="modal-form">
+            <form id="form-confirmar-ceremonia" class="modal-form" data-plural="false">
                 <input type="hidden" name="evento" value="Ceremonia - Evento Lima">
                 <div class="form-group attendance-options">
                     <button type="button" class="boton attendance-btn" data-attendance="si">¡Sí! Confirmo</button>
@@ -411,6 +434,45 @@
                 </div>
                 <div class="form-group">
                     <input type="text" id="comentario_asistencia_ceremonia" name="comentario_asistencia" placeholder="Datos adicionales, alergias. (opcional)">
+                </div>
+                <div class="form-group button-group" style="display: flex; gap: 10px; justify-content: center;">
+                    <button type="submit" class="boton" name="submit_type" value="correo">Confirmar mediante correo</button>
+                    <button type="submit" class="boton" name="submit_type" value="whatsapp">Confirmar por Whatsapp</button>
+                </div>
+                <p class="form-message" style="display:none;"></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modal-confirmar-ceremonia-acompanante" class="modal-overlay">
+    <div class="modal-content box-bordes-adorno">
+        <button class="modal-close" aria-label="Cerrar modal">×</button>
+        <svg class="adorno-esquina adorno-esquina-0" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <svg class="adorno-esquina adorno-esquina-1" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <svg class="adorno-esquina adorno-esquina-2" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <svg class="adorno-esquina adorno-esquina-3" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <div class="box-color-col">
+            <div class="icon-container modal-icon-container">
+                <div class="anim-confirmar-asistencia" id="lottie-confirmar-ceremonia-acompanante-anim"></div>
+            </div>
+            <h3>¿Asisten a la Ceremonia?</h3>
+            <svg class="adorno-titulo-modal" viewBox="0 0 100 10"><path d="M0 5 H100" stroke="var(--color-adorno-titulo-modal)" stroke-width="1"></path><circle cx="50" cy="5" r="3" fill="var(--color-adorno-titulo-modal)"></circle></svg>
+            <form id="form-confirmar-ceremonia-acompanante" class="modal-form" data-plural="true">
+                <input type="hidden" name="evento" value="Ceremonia - Evento Lima (con acompañante)">
+                <div class="form-group attendance-options">
+                    <button type="button" class="boton attendance-btn" data-attendance="si">¡Sí! Podemos</button>
+                    <button type="button" class="boton attendance-btn" data-attendance="no">No podemos :(</button>
+                    <input type="hidden" id="asistencia_ceremonia_acompanante" name="asistencia" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="nombre_asistencia_ceremonia_acompanante" name="nombre_asistencia" placeholder="Tu nombre completo" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="nombre_acompanante_ceremonia" name="nombre_acompanante" placeholder="Nombre de tu acompañante" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="comentario_asistencia_ceremonia_acompanante" name="comentario_asistencia" placeholder="Datos adicionales, alergias. (opcional)">
                 </div>
                 <div class="form-group button-group" style="display: flex; gap: 10px; justify-content: center;">
                     <button type="submit" class="boton" name="submit_type" value="correo">Confirmar mediante correo</button>
@@ -435,7 +497,7 @@
             </div>
             <h3>¿Asistes a la Fiesta?</h3>
             <svg class="adorno-titulo-modal" viewBox="0 0 100 10"><path d="M0 5 H100" stroke="var(--color-adorno-titulo-modal)" stroke-width="1"></path><circle cx="50" cy="5" r="3" fill="var(--color-adorno-titulo-modal)"></circle></svg>
-            <form id="form-confirmar-fiesta" class="modal-form">
+            <form id="form-confirmar-fiesta" class="modal-form" data-plural="false">
                 <input type="hidden" name="evento" value="Fiesta - Evento Lima">
                 <div class="form-group attendance-options">
                     <button type="button" class="boton attendance-btn" data-attendance="si">¡Sí! Confirmo</button>
@@ -447,6 +509,45 @@
                 </div>
                 <div class="form-group">
                     <input type="text" id="comentario_asistencia_fiesta" name="comentario_asistencia" placeholder="Datos adicionales, alergias. (opcional)">
+                </div>
+                 <div class="form-group button-group" style="display: flex; gap: 10px; justify-content: center;">
+                    <button type="submit" class="boton" name="submit_type" value="correo">Confirmar mediante correo</button>
+                    <button type="submit" class="boton" name="submit_type" value="whatsapp">Confirmar por Whatsapp</button>
+                </div>
+                <p class="form-message" style="display:none;"></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modal-confirmar-fiesta-acompanante" class="modal-overlay">
+    <div class="modal-content box-bordes-adorno">
+        <button class="modal-close" aria-label="Cerrar modal">×</button>
+        <svg class="adorno-esquina adorno-esquina-0" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <svg class="adorno-esquina adorno-esquina-1" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <svg class="adorno-esquina adorno-esquina-2" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <svg class="adorno-esquina adorno-esquina-3" viewBox="0 0 37 37"><g><path class="fondo-adorno" d="M37 0H0V37H37V0Z"></path><path class="punto-adorno" d="M0.75 37V33.79H3.38C20.18 33.79 33.79 20.17 33.79 3.38V0.75H36.99"></path><path class="circulo-adorno" d="M5.80002 11.56C8.99223 11.56 11.58 8.97221 11.58 5.78C11.58 2.58779 8.99223 0 5.80002 0C2.60781 0 0.0200195 2.58779 0.0200195 5.78C0.0200195 8.97221 2.60781 11.56 5.80002 11.56Z"></path></g></svg>
+        <div class="box-color-col">
+             <div class="icon-container modal-icon-container">
+                <div class="anim-confirmar-asistencia" id="lottie-confirmar-fiesta-acompanante-anim"></div>
+            </div>
+            <h3>¿Asisten a la Fiesta?</h3>
+            <svg class="adorno-titulo-modal" viewBox="0 0 100 10"><path d="M0 5 H100" stroke="var(--color-adorno-titulo-modal)" stroke-width="1"></path><circle cx="50" cy="5" r="3" fill="var(--color-adorno-titulo-modal)"></circle></svg>
+            <form id="form-confirmar-fiesta-acompanante" class="modal-form" data-plural="true">
+                <input type="hidden" name="evento" value="Fiesta - Evento Lima (con acompañante)">
+                <div class="form-group attendance-options">
+                    <button type="button" class="boton attendance-btn" data-attendance="si">¡Sí! Podemos</button>
+                    <button type="button" class="boton attendance-btn" data-attendance="no">No podemos :(</button>
+                    <input type="hidden" id="asistencia_fiesta_acompanante" name="asistencia" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="nombre_asistencia_fiesta_acompanante" name="nombre_asistencia" placeholder="Tu nombre completo" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="nombre_acompanante_fiesta" name="nombre_acompanante" placeholder="Nombre de tu acompañante" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="comentario_asistencia_fiesta_acompanante" name="comentario_asistencia" placeholder="Datos adicionales, alergias. (opcional)">
                 </div>
                  <div class="form-group button-group" style="display: flex; gap: 10px; justify-content: center;">
                     <button type="submit" class="boton" name="submit_type" value="correo">Confirmar mediante correo</button>

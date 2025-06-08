@@ -78,7 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     };
-
+    
+    // Cargar todas las animaciones Lottie
     loadLottieAnimation(document.getElementById('lottie-adorno-frase'), 'adorno_frase_portada.json', "Error Lottie Adorno Frase:");
     loadLottieAnimation(document.getElementById('lottie-corazon-falta'), 'corazon-falta.json', "Error Lottie Corazon Falta:");
     loadLottieAnimation(document.querySelector('.col-ceremonia .anim-anillos'), 'img_ceremonia.json', "Error Lottie Anillos (Ceremonia):");
@@ -100,6 +101,10 @@ document.addEventListener('DOMContentLoaded', function() {
     loadLottieAnimation(document.getElementById('lottie-confirmar-ceremonia-anim'), 'img_ceremonia.json', "Error Lottie Confirmar Ceremonia:", { preserveAspectRatio: 'xMidYMid meet' });
     loadLottieAnimation(document.getElementById('lottie-confirmar-fiesta-anim'), 'img_fiesta.json', "Error Lottie Confirmar Fiesta:", { preserveAspectRatio: 'xMidYMid meet' });
     loadLottieAnimation(document.querySelector('.anim-instagram-modal'), 'img_instagram.json', "Error Lottie Instagram (Modal):");
+    loadLottieAnimation(document.getElementById('lottie-confirmar-ceremonia-acompanante-anim'), 'img_ceremonia.json', "Error Lottie Confirmar Ceremonia Acompañante:", { preserveAspectRatio: 'xMidYMid meet' });
+    loadLottieAnimation(document.getElementById('lottie-confirmar-fiesta-acompanante-anim'), 'img_fiesta.json', "Error Lottie Confirmar Fiesta Acompañante:", { preserveAspectRatio: 'xMidYMid meet' });
+    loadLottieAnimation(document.querySelector('.anim-pre-confirmar'), 'img_ceremonia.json', "Error Lottie Pre-Confirmar:", { preserveAspectRatio: 'xMidYMid meet' });
+    
 
     // Slick Carousel
     if (typeof $ !== 'undefined' && typeof $.fn.slick === 'function') {
@@ -146,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Generic Modal Handling
     const setupModal = (modalId, openBtnId) => {
         const modal = document.getElementById(modalId);
-        const openBtn = document.getElementById(openBtnId);
+        const openBtn = openBtnId ? document.getElementById(openBtnId) : null;
         const closeBtn = modal ? modal.querySelector('.modal-close') : null;
 
         const openModal = () => {
@@ -170,25 +175,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.classList.remove('modal-open');
             }
         };
-
+        
         if (openBtn) {
             openBtn.addEventListener('click', (event) => {
                 event.preventDefault();
                 openModal();
             });
-        } else if (openBtnId){
-             console.warn(`Botón de apertura no encontrado: ${openBtnId}`);
         }
 
         if (closeBtn) closeBtn.addEventListener('click', closeModal);
-        else if (modal) console.warn(`Botón de cierre no encontrado para modal: ${modalId}`);
-
         if (modal) {
             modal.addEventListener('click', (event) => {
                 if (event.target === modal) closeModal();
             });
-        } else if (modalId) {
-             console.warn(`Modal no encontrado: ${modalId}`);
         }
         return { openModal, closeModal };
     };
@@ -198,9 +197,14 @@ document.addEventListener('DOMContentLoaded', function() {
     setupModal('modal-dresscode', 'open-dresscode-modal');
     setupModal('modal-tips', 'open-tips-modal');
     setupModal('modal-regalos', 'open-regalos-modal');
-    const ceremoniaConfirmModalControls = setupModal('modal-confirmar-ceremonia', 'open-confirmar-ceremonia-modal');
-    const fiestaConfirmModalControls = setupModal('modal-confirmar-fiesta', 'open-confirmar-fiesta-modal');
     setupModal('modal-instagram-profiles', 'open-instagram-profiles-modal');
+    
+    // Confirmation Modals Setup
+    const preConfirmModalControls = setupModal('modal-pre-confirmar');
+    const ceremoniaConfirmModalControls = setupModal('modal-confirmar-ceremonia');
+    const fiestaConfirmModalControls = setupModal('modal-confirmar-fiesta');
+    const ceremoniaAcompananteConfirmModalControls = setupModal('modal-confirmar-ceremonia-acompanante');
+    const fiestaAcompananteConfirmModalControls = setupModal('modal-confirmar-fiesta-acompanante');
 
 
     // Escape key to close modals
@@ -214,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Confirmation Form Handling
+    // Confirmation Form Handling (Updated to be more generic)
     const handleConfirmationForm = (formId, modalControls) => {
         const form = document.getElementById(formId);
         if (!form) {
@@ -226,10 +230,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const hiddenAttendanceInput = form.querySelector('input[name="asistencia"]');
         const formMessage = form.querySelector('.form-message');
         const nombreInput = form.querySelector('input[name="nombre_asistencia"]');
+        const acompananteInput = form.querySelector('input[name="nombre_acompanante"]');
         const comentarioInput = form.querySelector('input[name="comentario_asistencia"]');
         const eventoInput = form.querySelector('input[name="evento"]');
         const submitButtons = form.querySelectorAll('button[type="submit"]');
-
+        const esPlural = form.dataset.plural === 'true';
 
         attendanceButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -239,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (formMessage) { formMessage.style.display = 'none'; formMessage.textContent = ''; }
             });
         });
-
+        
         if (nombreInput) {
             nombreInput.addEventListener('input', () => {
                 if (formMessage && formMessage.textContent.toLowerCase().includes('nombre')) {
@@ -257,9 +262,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     formMessage.style.display = 'none'; formMessage.textContent = ''; formMessage.style.color = 'red';
                 }
 
+                // Validation
                 if (!hiddenAttendanceInput || !hiddenAttendanceInput.value) {
                      if (formMessage) {
-                        formMessage.textContent = 'Por favor, selecciona si asistirás o no.';
+                        formMessage.textContent = 'Por favor, selecciona si asistirán o no.';
                         formMessage.style.display = 'block';
                     }
                     return;
@@ -272,19 +278,38 @@ document.addEventListener('DOMContentLoaded', function() {
                     if(nombreInput) nombreInput.focus();
                     return;
                 }
+                // Validate guest name if in plural form
+                if (esPlural && (!acompananteInput || !acompananteInput.value.trim())) {
+                    if (formMessage) {
+                        formMessage.textContent = 'Por favor, ingresa el nombre de tu acompañante.';
+                        formMessage.style.display = 'block';
+                    }
+                    if(acompananteInput) acompananteInput.focus();
+                    return;
+                }
 
+                // Data Collection
                 const nombre = nombreInput.value.trim();
+                const acompananteNombre = esPlural ? acompananteInput.value.trim() : null;
                 const asistenciaValue = hiddenAttendanceInput.value;
-                const asistenciaTexto = asistenciaValue === 'si' ? 'Sí, confirmo asistencia' : 'No podré asistir';
                 const comentario = comentarioInput ? comentarioInput.value.trim() : '';
                 const evento = eventoInput ? eventoInput.value : 'Evento Boda Lima';
                 const weddingEmail = 'matrimoniokathayjplima@gmail.com';
                 const whatsappNumber = '51993968980';
 
+                let asistenciaTexto;
+                if (asistenciaValue === 'si') {
+                    asistenciaTexto = esPlural ? 'Sí, confirmamos asistencia' : 'Sí, confirmo asistencia';
+                } else {
+                    asistenciaTexto = esPlural ? 'No podremos asistir' : 'No podré asistir';
+                }
+
                 if (submitType === 'correo') {
                     const subject = `Confirmación Asistencia Boda K&JP - ${evento}`;
                     let body = `Hola Katha y Juan Pablo,\n\nUna nueva confirmación ha llegado:\n-------------------------------------\n`;
-                    body += `Nombre: ${nombre}\nEvento: ${evento}\nAsistencia: ${asistenciaTexto}\n`;
+                    body += `Nombre: ${nombre}\n`;
+                    if (acompananteNombre) body += `Acompañante: ${acompananteNombre}\n`;
+                    body += `Evento: ${evento}\nAsistencia: ${asistenciaTexto}\n`;
                     if (comentario) body += `Datos adicionales, alergias: ${comentario}\n`;
                     body += `-------------------------------------\n\nSaludos,\n${nombre}`;
                     const mailtoLink = `mailto:${weddingEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -296,9 +321,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     setTimeout(() => { window.location.href = mailtoLink; }, 500);
 
                 } else if (submitType === 'whatsapp') {
-                    let whatsappText = `¡Hola Katha y Juan Pablo! 👋\n\nQuiero confirmar mi asistencia para su boda:\n-------------------------------------\n`;
+                    let whatsappText = `¡Hola Katha y Juan Pablo! 👋\n\nQueremos confirmar nuestra asistencia para su boda:\n-------------------------------------\n`;
                     whatsappText += `*Evento:* ${evento}\n`;
                     whatsappText += `*Nombre:* ${nombre}\n`;
+                     if (acompananteNombre) whatsappText += `*Acompañante:* ${acompananteNombre}\n`;
                     whatsappText += `*Asistencia:* ${asistenciaTexto}\n`;
                     if (comentario) {
                         whatsappText += `*Datos adicionales, alergias:* ${comentario}\n`;
@@ -324,14 +350,49 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     };
+    
+    // Initialize all confirmation forms
+    handleConfirmationForm('form-confirmar-ceremonia', ceremoniaConfirmModalControls);
+    handleConfirmationForm('form-confirmar-fiesta', fiestaConfirmModalControls);
+    handleConfirmationForm('form-confirmar-ceremonia-acompanante', ceremoniaAcompananteConfirmModalControls);
+    handleConfirmationForm('form-confirmar-fiesta-acompanante', fiestaAcompananteConfirmModalControls);
 
+    
+    // NEW LOGIC FOR CONFIRMATION FLOW
+    let currentEventType = null; // Can be 'ceremonia' or 'fiesta'
 
-    if (document.getElementById('form-confirmar-ceremonia')) {
-        handleConfirmationForm('form-confirmar-ceremonia', ceremoniaConfirmModalControls);
+    function openPreConfirmModal(eventType) {
+        currentEventType = eventType;
+        preConfirmModalControls.openModal();
     }
-    if (document.getElementById('form-confirmar-fiesta')) {
-        handleConfirmationForm('form-confirmar-fiesta', fiestaConfirmModalControls);
-    }
+    
+    // Main buttons
+    document.getElementById('open-confirmar-ceremonia-modal').addEventListener('click', (e) => { e.preventDefault(); openPreConfirmModal('ceremonia'); });
+    document.getElementById('open-confirmar-fiesta-modal').addEventListener('click', (e) => { e.preventDefault(); openPreConfirmModal('fiesta'); });
+    
+    // Footer links
+    document.getElementById('confirmar-ceremonia-footer-link').addEventListener('click', (e) => { e.preventDefault(); openPreConfirmModal('ceremonia'); });
+    document.getElementById('confirmar-fiesta-footer-link').addEventListener('click', (e) => { e.preventDefault(); openPreConfirmModal('fiesta'); });
+
+    // Pre-confirmation modal buttons logic
+    document.getElementById('pre-confirmar-solo-btn').addEventListener('click', () => {
+        preConfirmModalControls.closeModal();
+        if (currentEventType === 'ceremonia') {
+            ceremoniaConfirmModalControls.openModal();
+        } else if (currentEventType === 'fiesta') {
+            fiestaConfirmModalControls.openModal();
+        }
+    });
+
+    document.getElementById('pre-confirmar-acompanante-btn').addEventListener('click', () => {
+        preConfirmModalControls.closeModal();
+        if (currentEventType === 'ceremonia') {
+            ceremoniaAcompananteConfirmModalControls.openModal();
+        } else if (currentEventType === 'fiesta') {
+            fiestaAcompananteConfirmModalControls.openModal();
+        }
+    });
+
 
     // Music Suggestion Form Handling
     const handleMusicSuggestionForm = () => {
@@ -475,31 +536,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Footer Link Handlers for Modals
-    const confirmarCeremoniaFooter = document.getElementById('confirmar-ceremonia-footer-link');
-    const openConfirmarCeremoniaBtn = document.getElementById('open-confirmar-ceremonia-modal');
-    if (confirmarCeremoniaFooter && openConfirmarCeremoniaBtn) {
-        confirmarCeremoniaFooter.addEventListener('click', (e) => {
-            e.preventDefault();
-            openConfirmarCeremoniaBtn.click();
-        });
-    }
-
-    const confirmarFiestaFooter = document.getElementById('confirmar-fiesta-footer-link');
-    const openConfirmarFiestaBtn = document.getElementById('open-confirmar-fiesta-modal');
-    if (confirmarFiestaFooter && openConfirmarFiestaBtn) {
-        confirmarFiestaFooter.addEventListener('click', (e) => {
-            e.preventDefault();
-            openConfirmarFiestaBtn.click();
-        });
-    }
-
+    // Footer Link Handler for Music Modal
     const sugerirCancionFooter = document.getElementById('sugerir-cancion-footer-link');
-    const openMusicaBtn = document.getElementById('open-musica-modal');
-    if (sugerirCancionFooter && openMusicaBtn) {
+    if (sugerirCancionFooter) {
         sugerirCancionFooter.addEventListener('click', (e) => {
             e.preventDefault();
-            openMusicaBtn.click();
+            musicaModalControls.openModal();
         });
     }
 });
