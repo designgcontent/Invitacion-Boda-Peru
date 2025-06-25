@@ -309,13 +309,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (deseaMenuVeggie) body += `Opción Menú: Vegetariano\n`;
                     if (comentario) body += `Datos adicionales/alergias: ${comentario}\n`;
                     body += `-------------------------------------\n\nSaludos,\n${nombre}`;
-                    const mailtoLink = `mailto:${weddingEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    
+                    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(weddingEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
                     if (formMessage) {
-                        formMessage.textContent = 'Gracias. Serás redirigido a tu cliente de correo para enviar la confirmación.';
+                        formMessage.textContent = 'Gracias. Se abrirá una nueva pestaña de Gmail para enviar la confirmación.';
                         formMessage.style.color = 'green'; formMessage.style.display = 'block';
                     }
-                    setTimeout(() => { window.location.href = mailtoLink; }, 500);
+                    setTimeout(() => { window.open(gmailLink, '_blank'); }, 500);
 
                 } else if (submitType === 'whatsapp') {
                     let whatsappText = `¡Hola Katha y Juan Pablo! 👋\n\nQueremos confirmar nuestra asistencia para su boda:\n-------------------------------------\n`;
@@ -429,16 +430,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             body += `-------------------------------------\n\n¡Que siga la música!`;
 
-            const mailtoLink = `mailto:${weddingEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(weddingEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
             if (formMessage) {
-                formMessage.textContent = 'Gracias por tu sugerencia. Serás redirigido a tu cliente de correo.';
+                formMessage.textContent = 'Gracias por tu sugerencia. Se abrirá una nueva pestaña de Gmail.';
                 formMessage.style.color = 'green';
                 formMessage.style.display = 'block';
             }
 
             setTimeout(() => {
-                window.location.href = mailtoLink;
+                window.open(gmailLink, '_blank');
             }, 500);
 
             setTimeout(() => {
